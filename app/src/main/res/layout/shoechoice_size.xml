@@ -11,7 +11,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="124dp"
-        android:layout_weight="0.45">
+        android:layout_weight="0.48">
 
         <Spinner
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_height="142dp"
             app:srcCompat="@drawable/a280647"
             android:id="@+id/imageView"
-            android:layout_marginTop="40dp"></ImageView>
+            android:layout_marginTop="30dp"></ImageView>
 
     </android.support.design.widget.TextInputLayout>
 
