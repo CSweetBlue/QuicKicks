@@ -16,18 +16,22 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner" />
+            android:id="@+id/spinner"
+            android:textAlignment="center" />
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner1" />
+            android:id="@+id/spinner1"
+            android:gravity="center_horizontal"
+            android:textAlignment="gravity" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="142dp"
             app:srcCompat="@drawable/a280647"
-            android:id="@+id/imageView"></ImageView>
+            android:id="@+id/imageView"
+            android:layout_marginTop="40dp"></ImageView>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -40,7 +44,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/webview"
-            />
+            android:layout_marginBottom="70dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="50dp" />
 
     </android.support.design.widget.TextInputLayout>
 

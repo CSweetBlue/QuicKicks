@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,23 +34,32 @@ public class shoechoiceActivity extends AppCompatActivity implements AdapterView
         WebView myWebView = (WebView) findViewById(R.id.webview);
         myWebView.setWebViewClient(new WebViewClient());
 
-        generateHTML();
-        File file = new File(this.getFilesDir().getPath() + "/captcha.html");
-        myWebView.loadUrl("file:///" + file);
+
+        //generateHTML();
+        //File file = new File(this.getFilesDir().getPath() + "/captcha.html");
+        //myWebView.loadUrl("file:///" + file);
 
         Spinner dropdown = (Spinner)findViewById(R.id.spinner);
+        dropdown.setGravity(Gravity.CENTER_HORIZONTAL);
         String[] items = new String[]{"Adilette Slides", "Ultra Boost Uncaged Shoes", "Superstar Foundation Shoes", "NMD_C1 Trail Shoes"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+//        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                ((TextView) adapterView.getChildAt(0)).setGravity(Gravity.CENTER);
+//            }
+//        });
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+
                 if(pos == 0)
                 {
                     String[] items1 = new String[]{"9", "10", "11", "12", "13", "14", "15"};
                     Spinner dropdown1 = (Spinner)findViewById(R.id.spinner1);
                     ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(shoechoiceActivity.this, android.R.layout.simple_spinner_dropdown_item, items1);
                     dropdown1.setAdapter(adapter1);
+                    ((TextView) adapterView.getChildAt(0)).setGravity(Gravity.CENTER);
 
                     ImageView shoePicture = (ImageView)findViewById(R.id.imageView);
                     shoePicture.setImageResource(R.drawable.a280647);
@@ -86,7 +97,9 @@ public class shoechoiceActivity extends AppCompatActivity implements AdapterView
                 }
             }
 
+
             public void onNothingSelected(AdapterView<?> parent) {
+
 
             }
         });
