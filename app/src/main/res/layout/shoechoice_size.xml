@@ -38,18 +38,28 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="196dp"
-        android:layout_weight="0.51"
+        android:layout_weight="0.37"
         android:weightSum="1">
 
         <WebView
             android:layout_width="match_parent"
             android:layout_height="237dp"
             android:id="@+id/webview"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="46.5dp"
             android:layout_marginRight="46dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="40dp" />
 
     </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:layout_weight="0.09"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="-10dp"
+        android:clickable="false" />
 
 </LinearLayout>

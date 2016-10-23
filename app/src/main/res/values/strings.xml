@@ -14,6 +14,7 @@
     </string>
     <string name="error_invalid_password">The entered password is invalid.</string>
     <string name="error_invalid_email">The entered email is invalid.</string>
+    <string name="login_popup">Login take a while. Please be patient.</string>
 
     <string-array name="shoenames">
         <item>Adilette Slides</item>
