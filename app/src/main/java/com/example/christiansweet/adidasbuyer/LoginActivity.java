@@ -4,11 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -32,6 +34,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set up the login form.
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+       // getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.abs_layout);
         getSupportActionBar().setTitle("Kicks");
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -158,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
+            Toast.makeText(this, "Please wait, this process takes some time.", Toast.LENGTH_LONG).show();
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
@@ -221,6 +226,8 @@ public class LoginActivity extends AppCompatActivity {
                 boolean success = Client.login(mEmail, mPassword);
                 return success;
             } catch (Exception e) {
+                new AlertDialog.Builder(LoginActivity.this)
+                        .setMessage("Error: server is currently having issues.").setPositiveButton("OK", null).show();
                 return false;
             }
         }

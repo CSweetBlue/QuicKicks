@@ -11,14 +11,6 @@
     tools:context="com.example.christiansweet.adidasbuyer.LoginActivity"
     android:background="@drawable/addidasimage">
     <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
-
     <ScrollView
 
         android:id="@+id/login_form"
@@ -45,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
+
                     android:maxLines="1"
                     android:singleLine="true"
                     android:backgroundTint="@android:color/black"
@@ -62,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
+
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -83,4 +77,15 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:theme="@style/ProgressTheme"
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        />
+
 </LinearLayout>

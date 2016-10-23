@@ -53,13 +53,14 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:text="Button"
+        android:text="Add to Cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button"
         android:layout_weight="0.09"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="-10dp"
-        android:clickable="false" />
+        android:clickable="false"
+        />
 
 </LinearLayout>
