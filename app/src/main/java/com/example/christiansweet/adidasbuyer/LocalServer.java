@@ -3,6 +3,8 @@ package com.example.christiansweet.adidasbuyer;
 import com.example.christiansweet.adidasbuyer.Client;
 
 
+import java.io.IOException;
+
 import fi.iki.elonen.NanoHTTPD;
 
 /**
@@ -13,10 +15,10 @@ public class LocalServer extends NanoHTTPD {
 
     private String key;
 
-    public LocalServer() {
+    public LocalServer() throws IOException {
         super(8080);
         Client c = new Client();
-        key = c.getServerData()[0];
+        key = c.getSiteKey();
     }
 
     @Override public Response serve(IHTTPSession session) {

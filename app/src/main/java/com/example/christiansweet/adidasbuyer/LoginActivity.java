@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         // Set up the login form.
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.abs_layout);
@@ -77,11 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //attemptLogin();
-
-                Intent mainIntent = new Intent(LoginActivity.this, shoechoiceActivity.class);
-                startActivity(mainIntent);
-
+                attemptLogin();
             }
 
 
@@ -89,6 +86,20 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        mEmailView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mEmailView.setError(null);
+            }
+        });
+
+        mPasswordView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPasswordView.setError(null);
+            }
+        });
 
         mEmailSignInButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -126,7 +137,17 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
 
+        if (password.length() == 0) {
+            cancel = true;
+            focusView = mPasswordView;
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+        }
 
+        if (!email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+            cancel = true;
+            focusView = mEmailView;
+            mEmailView.setError(getString(R.string.error_invalid_email));
+        }
 
 
         if (cancel) {
@@ -196,14 +217,12 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-
-
-
-
-            // TODO: register the new account here.
-            return true;
+            try {
+                boolean success = Client.login(mEmail, mPassword);
+                return success;
+            } catch (Exception e) {
+                return false;
+            }
         }
 
         @Override
@@ -212,6 +231,8 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
+                Intent mainIntent = new Intent(LoginActivity.this, shoechoiceActivity.class);
+                startActivity(mainIntent);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
