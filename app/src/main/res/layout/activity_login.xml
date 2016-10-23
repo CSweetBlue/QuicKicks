@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
-                    android:text="chris.ayoubtexas@gmail.com"
+
                     android:maxLines="1"
                     android:singleLine="true"
                     android:backgroundTint="@android:color/black"
