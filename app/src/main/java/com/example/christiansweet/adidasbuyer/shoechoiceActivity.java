@@ -1,10 +1,12 @@
 package com.example.christiansweet.adidasbuyer;
 
+
 import android.app.LoaderManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -95,6 +97,10 @@ public class shoechoiceActivity extends AppCompatActivity implements AdapterView
                     ImageView shoePicture = (ImageView)findViewById(R.id.imageView);
                     shoePicture.setImageResource(R.drawable.s81835);
                 }
+
+                getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+                getSupportActionBar().setCustomView(R.layout.abs_layout);
+                getSupportActionBar().setTitle("Kicks");
             }
 
 
