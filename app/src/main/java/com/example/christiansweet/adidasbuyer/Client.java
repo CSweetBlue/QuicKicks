@@ -8,8 +8,8 @@ import java.util.Arrays;
 
 public class Client {
 
-	static String serverName = "35.160.113.251";
-	final static int port = 8888;	
+	private final static String serverName = "35.160.113.251";
+	private final static int port = 8888;
 	
 	public static void main (String[] args) {
 		Client c = new Client();

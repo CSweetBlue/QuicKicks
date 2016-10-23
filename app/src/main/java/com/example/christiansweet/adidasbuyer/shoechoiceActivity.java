@@ -5,12 +5,19 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -22,7 +29,13 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Arrays;
+
+import fi.iki.elonen.ServerRunner;
 
 /**
  * Created by Christian Sweet on 10/22/2016.
@@ -30,17 +43,59 @@ import java.util.Arrays;
 
 public class shoechoiceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private WebView myWebView;
+    private LocalServer l;
+    private ImageView shoePicture;
+    private String captchaResponse = "";
+
+    class MyJavaScriptInterface {
+
+        @android.webkit.JavascriptInterface
+        public void printData(String data) {
+            captchaResponse = data;
+        }
+
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shoechoice_size);
-        WebView myWebView = (WebView) findViewById(R.id.webview);
-        myWebView.setWebViewClient(new WebViewClient());
+        myWebView = (WebView) findViewById(R.id.webview);
+        myWebView.addJavascriptInterface(new MyJavaScriptInterface(), "HtmlViewer");
 
 
         //generateHTML();
         //File file = new File(this.getFilesDir().getPath() + "/captcha.html");
         //myWebView.loadUrl("file:///" + file);
+        myWebView.setWebViewClient(new WebViewClient() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                // here, on the last request, then return the token
+                if (request.getUrl().toString().contains("userverify")) {
+                    shoechoiceActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Handler h = new Handler();
+                            h.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    myWebView.loadUrl("javascript:HtmlViewer.printData(grecaptcha.getResponse());");
+                                    myWebView.loadUrl("javascript:HtmlViewer.printData(grecaptcha.getResponse());");
+                                    myWebView.loadUrl("javascript:HtmlViewer.printData(grecaptcha.getResponse());");
 
+                                    // here, do a check on the button for ATC and enable it
+                                }
+                            }, 500);
+                        }
+                    });
+                }
+                return super.shouldInterceptRequest(view, request);
+            }
+        });
+        myWebView.getSettings().setJavaScriptEnabled(true);
+
+        shoePicture = (ImageView)findViewById(R.id.imageView);
         Spinner dropdown = (Spinner)findViewById(R.id.spinner);
         dropdown.setGravity(Gravity.CENTER_HORIZONTAL);
         String[] items = new String[]{"Adilette Slides", "Ultra Boost Uncaged Shoes", "Superstar Foundation Shoes", "NMD_C1 Trail Shoes"};
@@ -63,7 +118,7 @@ public class shoechoiceActivity extends AppCompatActivity implements AdapterView
                     dropdown1.setAdapter(adapter1);
                     ((TextView) adapterView.getChildAt(0)).setGravity(Gravity.CENTER);
 
-                    ImageView shoePicture = (ImageView)findViewById(R.id.imageView);
+
                     shoePicture.setImageResource(R.drawable.a280647);
 
                 }
@@ -74,7 +129,7 @@ public class shoechoiceActivity extends AppCompatActivity implements AdapterView
                     ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(shoechoiceActivity.this, android.R.layout.simple_spinner_dropdown_item, items1);
                     dropdown1.setAdapter(adapter1);
 
-                    ImageView shoePicture = (ImageView)findViewById(R.id.imageView);
+
                     shoePicture.setImageResource(R.drawable.bb4274);
                 }
                 if(pos == 2)
@@ -84,7 +139,7 @@ public class shoechoiceActivity extends AppCompatActivity implements AdapterView
                     ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(shoechoiceActivity.this, android.R.layout.simple_spinner_dropdown_item, items1);
                     dropdown1.setAdapter(adapter1);
 
-                    ImageView shoePicture = (ImageView)findViewById(R.id.imageView);
+
                     shoePicture.setImageResource(R.drawable.c77124);
                 }
                 if(pos == 3)
@@ -94,7 +149,7 @@ public class shoechoiceActivity extends AppCompatActivity implements AdapterView
                     ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(shoechoiceActivity.this, android.R.layout.simple_spinner_dropdown_item, items1);
                     dropdown1.setAdapter(adapter1);
 
-                    ImageView shoePicture = (ImageView)findViewById(R.id.imageView);
+                    shoePicture = (ImageView)findViewById(R.id.imageView);
                     shoePicture.setImageResource(R.drawable.s81835);
                 }
 
@@ -109,6 +164,27 @@ public class shoechoiceActivity extends AppCompatActivity implements AdapterView
 
             }
         });
+
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                l = new LocalServer();
+                try {
+                    l.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                myWebView.loadUrl("http://127.0.0.1:8080");
+            }
+        }.execute();
 
     }
 
@@ -148,28 +224,10 @@ public class shoechoiceActivity extends AppCompatActivity implements AdapterView
     }
 
 
-    public void generateHTML() {
-        Client c = new Client();
-        String siteKey = c.getServerData()[0];
-
-
-        String filename = "captcha.html";
-        String output = "<html> <head> <script src='https://www.google.com/recaptcha/api.js'></script> </head> <body> <form>" +
-                "<div class=\"g-recaptcha\" data-sitekey=\" " + siteKey + "\"></div>" +
-                "</form> </body> </html>";
-        FileOutputStream outputStream;
-
-        try {
-            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-            outputStream.write(output.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    @Override
+    protected void onDestroy() {
+        l.stop();
     }
-
-
 
 
 }
