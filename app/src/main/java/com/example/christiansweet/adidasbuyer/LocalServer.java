@@ -22,7 +22,7 @@ public class LocalServer extends NanoHTTPD {
     }
 
     @Override public Response serve(IHTTPSession session) {
-        String output = "<html>   <head>    <script type=\"text/javascript\"> var onloadCallback = function() { grecaptcha.render('html_element', { 'sitekey' : '" + key + "'  }); }; </script>  </head>  <body>  <div id=\"html_element\"></div> <script src=\"https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit\"  async defer> </script> </body> </html>";
+        String output = "<html>   <head>    <script type=\"text/javascript\"> var onloadCallback = function() { grecaptcha.render('html_element', { 'sitekey' : '" + key + "'  }); }; </script>  </head>  <body bgcolor=\"#f9f9f9\">  <div id=\"html_element\"></div> <script src=\"https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit\"  async defer> </script> </body> </html>";
 
         String mime_type = NanoHTTPD.MIME_HTML;
         Method method = session.getMethod();

@@ -234,14 +234,23 @@ public class shoechoiceActivity extends AppCompatActivity {
                         else {
                             // display error, refresh captcha
                             new AlertDialog.Builder(shoechoiceActivity.this)
-                                    .setMessage("Failed! Try solving the captcha again and maybe selecting a different size.").setPositiveButton("OK", null)
-                                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        .setMessage("Failed! Try solving the captcha again and maybe selecting a different size. \n\nWould you like to open your cart anyways?")
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         @Override
-                                        public void onDismiss(DialogInterface dialogInterface) {
-                                            myWebView.loadUrl("http://127.0.0.1:8080");
-                                            captchaResponse = "";
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            // open the web browser or something here
+                                            Intent intent = new Intent(shoechoiceActivity.this, WebBrowser.class);
+                                            shoechoiceActivity.this.startActivity(intent);
+                                            finish();
                                         }
-                                    }).show();
+
+                                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    myWebView.loadUrl("http://127.0.0.1:8080");
+                                    captchaResponse = "";
+                                }
+                            }).show();
                         }
                     }
                 });
