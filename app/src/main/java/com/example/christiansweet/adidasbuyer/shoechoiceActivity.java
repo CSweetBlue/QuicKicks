@@ -155,7 +155,6 @@ public class shoechoiceActivity extends AppCompatActivity implements AdapterView
 
                 getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
                 getSupportActionBar().setCustomView(R.layout.abs_layout);
-                getSupportActionBar().setTitle("Kicks");
             }
 
 
