@@ -95,7 +95,7 @@ public class shoechoiceActivity extends AppCompatActivity {
 
         shoePicture = (ImageView)findViewById(R.id.imageView);
         dropdown = (Spinner)findViewById(R.id.spinner);
-        dropdown.setGravity(Gravity.CENTER_HORIZONTAL);
+        //dropdown.setGravity(Gravity.CENTER_HORIZONTAL);
         String[] items = new String[]{"Adilette Slides", "Ultra Boost Uncaged Shoes", "Superstar Foundation Shoes", "NMD_C1 Trail Shoes"};
         final String[] skus = new String[]{"280647", "BB4274", "C77124", "S81835"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -132,7 +132,7 @@ public class shoechoiceActivity extends AppCompatActivity {
                             dropdown1 = (Spinner)findViewById(R.id.spinner1);
                             ArrayAdapter<String> adapter1 = new ArrayAdapter<>(shoechoiceActivity.this, android.R.layout.simple_spinner_dropdown_item, items);
                             dropdown1.setAdapter(adapter1);
-                            ((TextView) adapterView.getChildAt(0)).setGravity(Gravity.CENTER);
+                            //((TextView) adapterView.getChildAt(0)).setGravity(Gravity.CENTER);
 
                         }
                     }.execute();

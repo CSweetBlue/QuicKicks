@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Edge on Kicks</string>
+    <string name="app_name">QuicKicks</string>
 
-    <string name="title_name">Edge on Kicks</string>
+    <string name="title_name">QuicKicks</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
